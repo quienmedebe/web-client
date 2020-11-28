@@ -8,9 +8,10 @@
   "plugins": [
     "react",
     "react-hooks",
+    "jsx-a11y",
     "jest"
   ],
-  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:jest/recommended", "plugin:jest/style"],
+  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:react-hooks/recommended", "plugin:jsx-a11y/recommended", "plugin:jest/recommended", "plugin:jest/style"],
   "parserOptions": {
     "sourceType": "module",
     "ecmaVersion": 2018
