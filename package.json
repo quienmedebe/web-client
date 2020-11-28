@@ -9,7 +9,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
-    "web-vitals": "^0.2.4",
+    "web-vitals": "^1.0.1",
     "workbox-background-sync": "^5.1.3",
     "workbox-broadcast-update": "^5.1.3",
     "workbox-cacheable-response": "^5.1.3",
@@ -24,6 +24,8 @@
     "workbox-streams": "^5.1.3"
   },
   "scripts": {
+    "check-package-manager": "node -e \"!process.env.npm_config_user_agent.startsWith('npm/') && !console.log('---- USE NPM TO INSTALL DEPENDENCIES ----') && process.exit(1)\"",
+    "preinstall": "npm run check-package-manager --silent",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
