@@ -1,16 +1,16 @@
 import React from 'react';
-import './App.scss';
-import {useAppState} from './state/app';
+import {useSelector} from 'react-redux';
+import GlobalStyles from './GlobalStyles';
+import Navigation from './Navigation';
 
 function App() {
-  const appState = useAppState();
+  const appState = useSelector(state => state.app);
 
   return (
-    <div className='App'>
-      <span>Current App state: {appState.loaded ? 'Loaded' : 'Not loaded'}</span>
-      <br />
-      <button onClick={() => appState.changeLoaded(!appState.loaded)}>Click to change app state</button>
-    </div>
+    <>
+      <GlobalStyles />
+      <Navigation loggedUserId={appState.loggedId} />
+    </>
   );
 }
 

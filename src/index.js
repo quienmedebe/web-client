@@ -1,16 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.scss';
+import {Router} from 'react-router-dom';
+import {Provider as ReduxProvider} from 'react-redux';
 import App from './App.jsx';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
-import {AppProvider} from './state/app/AppContext.jsx';
+import store from './redux/store';
+import history from './modules/history.jsx';
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppProvider>
-      <App />
-    </AppProvider>
+    <ReduxProvider store={store}>
+      <Router history={history}>
+        <App />
+      </Router>
+    </ReduxProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
