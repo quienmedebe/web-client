@@ -3,6 +3,7 @@
     "browser": true,
     "commonjs": true,
     "es6": true,
+    "node": true,
     "jest/globals": true
   },
   "plugins": ["react", "react-hooks", "jsx-a11y", "prettier", "jest"],
@@ -17,7 +18,7 @@
   ],
   "parserOptions": {
     "sourceType": "module",
-    "ecmaVersion": 2018
+    "ecmaVersion": 2020
   },
   "settings": {
     "react": {
@@ -29,6 +30,7 @@
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "no-unused-vars": "warn",
-    "prettier/prettier": "off"
+    "prettier/prettier": "off",
+    "react/prop-types": "warn"
   }
 }
