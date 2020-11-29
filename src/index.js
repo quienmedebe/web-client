@@ -2,19 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router} from 'react-router-dom';
 import {Provider as ReduxProvider} from 'react-redux';
+import {ErrorBoundary} from 'react-error-boundary';
 import App from './App.jsx';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store';
 import history from './modules/history.jsx';
 
+import AppError from './AppError';
+
 ReactDOM.render(
   <React.StrictMode>
-    <ReduxProvider store={store}>
-      <Router history={history}>
-        <App />
-      </Router>
-    </ReduxProvider>
+    <ErrorBoundary FallbackComponent={AppError}>
+      <ReduxProvider store={store}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </ReduxProvider>
+    </ErrorBoundary>
   </React.StrictMode>,
   document.getElementById('root')
 );
