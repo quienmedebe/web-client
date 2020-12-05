@@ -5,6 +5,8 @@
   "dependencies": {
     "history": "^4.10.1",
     "node-sass": "^4.14.1",
+    "polished": "^4.0.5",
+    "promise.allsettled": "^1.0.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -15,6 +17,7 @@
     "react-spring": "^8.0.27",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "styled-breakpoints": "^9.0.3",
     "styled-components": "^5.2.1",
     "web-vitals": "^1.0.1",
     "workbox-background-sync": "^5.1.3",
