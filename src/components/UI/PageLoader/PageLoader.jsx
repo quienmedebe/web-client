@@ -6,25 +6,13 @@ const PageLoad = ({id, isLoading, hasError, onErrorComponent, onSuccessComponent
   const loadingAnimation = useTransition(isLoading, null, transitionStyles);
   const loadedComponent = useMemo(() => (hasError ? onErrorComponent : onSuccessComponent), [hasError, onErrorComponent, onSuccessComponent]);
 
-  if (isLoading) {
-    return loadingAnimation.map(
-      ({item, key, props}) =>
-        item && (
-          <animated.div id={id} key={key} style={props}>
-            {onLoadComponent}
-          </animated.div>
-        )
+  return loadingAnimation.map(({item, key, props}) => {
+    return (
+      <animated.div id={id} key={key} style={props}>
+        {item ? onLoadComponent : loadedComponent}
+      </animated.div>
     );
-  }
-
-  return loadingAnimation.map(
-    ({item, key, props}) =>
-      !item && (
-        <animated.div id={id} key={key} style={props}>
-          {loadedComponent}
-        </animated.div>
-      )
-  );
+  });
 };
 
 PageLoad.propTypes = {
@@ -47,9 +35,9 @@ PageLoad.defaultProps = {
   onLoadComponent: <></>,
   onErrorComponent: <></>,
   transitionStyles: {
-    from: {opacity: 0, height: '100%'},
-    enter: {opacity: 1, height: '100%'},
-    leave: {opacity: 0, height: '100%'},
+    from: {opacity: 0},
+    enter: {opacity: 1},
+    leave: {opacity: 1},
   },
 };
 
