@@ -1,5 +1,8 @@
 import React, {useEffect, useMemo} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
+import allSettled from 'promise.allsettled';
+import {APP_SPLASH_SCREEN_TIME} from './config/config';
+import {resolveAfterTime} from './modules/helpers';
 import GlobalStyles from './GlobalStyles';
 import Navigation from './Navigation';
 import PageLoader from './components/UI/PageLoader/PageLoader';
@@ -11,9 +14,16 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(appHasLoaded());
-    }, 2000);
+    const splashScreenTime = resolveAfterTime(APP_SPLASH_SCREEN_TIME);
+    allSettled([splashScreenTime.promise]).then(([splashResult]) => {
+      if (splashResult.status === 'fulfilled') {
+        dispatch(appHasLoaded());
+      }
+    });
+
+    return () => {
+      splashScreenTime.cancel();
+    };
   }, [dispatch]);
 
   const loadingComponent = useMemo(() => {
