@@ -7,7 +7,7 @@ import PoppinsLightItalic from './assets/fonts/Poppins-LightItalic.ttf';
 import PoppinsRegular from './assets/fonts/Poppins-Regular.ttf';
 import PoppinsSemiBold from './assets/fonts/Poppins-SemiBold.ttf';
 import PoppinsSemiBoldItalic from './assets/fonts/Poppins-SemiBoldItalic.ttf';
-import {textAlt} from './theme/colors';
+import {main, textAlt} from './theme/colors';
 
 export default createGlobalStyle`
   @font-face {
@@ -100,5 +100,16 @@ export default createGlobalStyle`
 
   code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  }
+
+  a {
+    color: ${main};
+    font-weight: 500;
+    text-decoration-color: transparent;
+    transition: text-decoration-color ease-in-out 300ms;
+    
+    &:hover{
+      text-decoration-color: ${main};
+    }
   }
 `;
