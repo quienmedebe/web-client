@@ -4,26 +4,33 @@ import {Router} from 'react-router-dom';
 import {Provider as ReduxProvider} from 'react-redux';
 import {ErrorBoundary} from 'react-error-boundary';
 import {ThemeProvider} from 'styled-components';
+import {ThemeProvider as MuiProvider} from '@material-ui/core';
+import {HelmetProvider} from 'react-helmet-async';
 import App from './App.jsx';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/store';
 import history from './modules/history.jsx';
 import theme from './theme/theme';
+import muiTheme from './theme/muiTheme';
 
 import AppError from './AppError';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ErrorBoundary FallbackComponent={AppError}>
-      <ReduxProvider store={store}>
-        <Router history={history}>
-          <ThemeProvider theme={theme}>
-            <App />
-          </ThemeProvider>
-        </Router>
-      </ReduxProvider>
-    </ErrorBoundary>
+    <HelmetProvider>
+      <ErrorBoundary FallbackComponent={AppError}>
+        <ReduxProvider store={store}>
+          <Router history={history}>
+            <ThemeProvider theme={theme}>
+              <MuiProvider theme={muiTheme}>
+                <App />
+              </MuiProvider>
+            </ThemeProvider>
+          </Router>
+        </ReduxProvider>
+      </ErrorBoundary>
+    </HelmetProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

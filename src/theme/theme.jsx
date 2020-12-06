@@ -1,8 +1,8 @@
 export default {
   breakpoints: {
-    sm: '57.6em',
-    md: '76.8em',
-    lg: '99.2em',
-    xl: '120em',
+    sm: '576em',
+    md: '768em',
+    lg: '992em',
+    xl: '1200em',
   },
 };
