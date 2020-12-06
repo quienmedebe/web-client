@@ -1,7 +1,11 @@
 import React, {useCallback, useMemo} from 'react';
 import {useLocation} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
+import {Helmet} from 'react-helmet';
 import {login} from '../../modules/auth';
+import PageLoader from '../../components/UI/PageLoader/PageLoader';
+import GeneralLayout from '../../components/Layouts/GeneralLayout';
+import LoginView from './LoginView';
 
 const Login = () => {
   const location = useLocation();
@@ -25,13 +29,18 @@ const Login = () => {
     }
   }, [dispatch, originalRequest]);
 
-  return (
-    <div>
-      <h1>Login page</h1>
-      <button onClick={loginHandler}>Login user</button>
-      <span>Will Redirect to: {originalRequest}</span>
-    </div>
-  );
+  const SuccessComponent = useMemo(() => {
+    return (
+      <GeneralLayout>
+        <Helmet>
+          <title>Quién Me Debe - Iniciar sesión</title>
+        </Helmet>
+        <LoginView loginHandler={loginHandler} />
+      </GeneralLayout>
+    );
+  }, [loginHandler]);
+
+  return <PageLoader onSuccessComponent={SuccessComponent} />;
 };
 
 export default Login;
