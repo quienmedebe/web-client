@@ -115,9 +115,31 @@ export default styled.div`
     &__providers {
       display: grid;
       margin: 2rem 0;
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(1, 1fr);
-      grid-gap: 3rem;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr;
+      grid-gap: 2rem;
+      grid-auto-flow: row;
+      ${up('sm')} {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      &-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &-image {
+          width: 3rem;
+          margin-right: 1rem;
+        }
+
+        &--full {
+          grid-column: 1 / 2;
+          ${up('sm')} {
+            grid-column: 1 / 3;
+          }
+        }
+      }
     }
   }
 `;

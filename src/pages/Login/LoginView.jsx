@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 import Styles from './LoginView.styles';
 import Logo from '../../components/UI/Logo/Logo';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
+import Image from '../../components/UI/Image/Image';
 import ButtonLight from '../../components/UI/Button/ButtonLight';
-import {Link} from 'react-router-dom';
+import googleIcon from '../../assets/images/google.png';
+import appleIcon from '../../assets/images/apple-black.png';
 
 const LoginView = ({loginHandler, email, setEmail, password, setPassword}) => {
   return (
@@ -60,8 +63,15 @@ const LoginView = ({loginHandler, email, setEmail, password, setPassword}) => {
         <div className='Social__wrapper'>
           <h2 className='Social__title'>Vincula tu cuenta</h2>
           <div className='Social__providers'>
-            <ButtonLight>Inicia sesión con Google</ButtonLight>
-            <ButtonLight>Inicia sesión con Apple</ButtonLight>
+            <ButtonLight className='Social__providers-button'>
+              <Image src={googleIcon} alt='Inicia sesión con Google' className='Social__providers-button-image' />
+              Google
+            </ButtonLight>
+            <ButtonLight className='Social__providers-button'>
+              <Image src={appleIcon} alt='Inicia sesión con Apple' className='Social__providers-button-image' />
+              Apple
+            </ButtonLight>
+            <ButtonLight className='Social__providers-button Social__providers-button--full'>Entra sin registrarte</ButtonLight>
           </div>
         </div>
       </section>
