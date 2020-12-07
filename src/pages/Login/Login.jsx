@@ -12,6 +12,7 @@ const Login = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const originalRequest = useMemo(() => {
     if (location.state?.originalRequestPath) {
@@ -24,17 +25,20 @@ const Login = () => {
   const loginHandler = useCallback(
     async e => {
       e.preventDefault();
-      console.log(email, password);
-      if (!email || !password) {
+      const parsedEmail = email.trim();
+      if (!parsedEmail.length || !password.length) {
+        setErrorMessage('Los datos introducidos no son correctos');
         return;
       }
+
       try {
+        setErrorMessage('');
         await login({
           dispatch,
           redirectTo: originalRequest,
         });
       } catch (error) {
-        // Error handler
+        setErrorMessage('Ha ocurrido un error al iniciar sesión');
       }
     },
     [dispatch, originalRequest, email, password]
@@ -46,10 +50,10 @@ const Login = () => {
         <Helmet>
           <title>Quién Me Debe - Iniciar sesión</title>
         </Helmet>
-        <LoginView loginHandler={loginHandler} email={email} setEmail={setEmail} password={password} setPassword={setPassword} />
+        <LoginView loginHandler={loginHandler} email={email} setEmail={setEmail} password={password} setPassword={setPassword} errorMessage={errorMessage} />
       </GeneralLayout>
     );
-  }, [loginHandler, email, password]);
+  }, [loginHandler, email, password, errorMessage]);
 
   return <PageLoader onSuccessComponent={SuccessComponent} />;
 };

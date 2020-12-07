@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import Styles from './LoginView.styles';
@@ -10,7 +10,15 @@ import ButtonLight from '../../components/UI/Button/ButtonLight';
 import googleIcon from '../../assets/images/google.png';
 import appleIcon from '../../assets/images/apple-black.png';
 
-const LoginView = ({loginHandler, email, setEmail, password, setPassword}) => {
+const LoginView = ({loginHandler, email, setEmail, password, setPassword, errorMessage}) => {
+  const ErrorMessage = useMemo(() => {
+    if (!errorMessage) {
+      return null;
+    }
+
+    return <span className='Main__form-send-error'>{errorMessage}</span>;
+  }, [errorMessage]);
+
   return (
     <Styles>
       <Logo as='header' />
@@ -44,10 +52,11 @@ const LoginView = ({loginHandler, email, setEmail, password, setPassword}) => {
             />
             <div className='Main__form-send'>
               <Button type='submit'>Iniciar sesión</Button>
+              {ErrorMessage}
             </div>
           </form>
           <div className='Main__actions'>
-            <Link className='Main__actions-link Main__actions-link--signup' to='signup'>
+            <Link className='Main__actions-link Main__actions-link--signup' to='/signup'>
               Crear cuenta
             </Link>
             <Link className='Main__actions-link' to='/remember-password'>
@@ -85,6 +94,7 @@ LoginView.propTypes = {
   setEmail: PropTypes.func,
   password: PropTypes.string.isRequired,
   setPassword: PropTypes.func,
+  errorMessage: PropTypes.string,
 };
 
 export default LoginView;

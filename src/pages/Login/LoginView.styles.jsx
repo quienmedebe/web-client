@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {up} from 'styled-breakpoints';
-import {backgroundLight, text, textAlt} from '../../theme/colors';
+import {backgroundLight, errorLight, text, textAlt} from '../../theme/colors';
 
 export default styled.div`
   display: flex;
@@ -47,6 +47,13 @@ export default styled.div`
         flex-direction: column;
         margin-top: 3rem;
         margin-bottom: 1rem;
+
+        &-error {
+          margin: 0.5rem 0;
+          font-size: 1.4rem;
+          color: ${errorLight};
+          text-align: center;
+        }
       }
     }
 
@@ -129,7 +136,8 @@ export default styled.div`
         align-items: center;
 
         &-image {
-          width: 3rem;
+          padding-top: 0.5rem;
+          width: 2.5rem;
           margin-right: 1rem;
         }
 
