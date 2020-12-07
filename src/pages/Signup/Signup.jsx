@@ -2,52 +2,53 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {Helmet} from 'react-helmet-async';
 import PageLoader from '../../components/UI/PageLoader/PageLoader';
 import GeneralLayout from '../../components/Layouts/GeneralLayout';
-import RememberPasswordView from './RememberPasswordView';
+import SignupView from './SignupView';
 
-const RememberPassword = () => {
+const Signup = () => {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
 
-  const rememberPasswordHandler = useCallback(
+  const signupHandler = useCallback(
     async e => {
       e.preventDefault();
       const parsedEmail = email.trim();
-      if (!parsedEmail.length) {
-        setSuccessMessage('');
-        setErrorMessage('El email es obligatorio');
+      if (!parsedEmail.length || !password.length) {
+        setErrorMessage('Los datos introducidos no son correctos');
         return;
       }
 
       try {
         setErrorMessage('');
-        setSuccessMessage('Te hemos enviado un email para establecer una nueva contraseña');
       } catch (error) {
-        setSuccessMessage('');
-        setErrorMessage('Ha ocurrido un error al recuperar la contraseña');
+        setErrorMessage('Ha ocurrido un error al crear la cuenta');
       }
     },
-    [email]
+    [email, password]
   );
 
   const SuccessComponent = useMemo(() => {
     return (
       <GeneralLayout>
         <Helmet>
-          <title>Quién Me Debe - Recuperar contraseña</title>
+          <title>Quién Me Debe - Crear cuenta</title>
         </Helmet>
-        <RememberPasswordView
-          rememberPasswordHandler={rememberPasswordHandler}
+        <SignupView
+          signupHandler={signupHandler}
           email={email}
           setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          confirmPassword={confirmPassword}
+          setConfirmPassword={setConfirmPassword}
           errorMessage={errorMessage}
-          successMessage={successMessage}
         />
       </GeneralLayout>
     );
-  }, [rememberPasswordHandler, email, errorMessage, successMessage]);
+  }, [signupHandler, email, password, confirmPassword, errorMessage]);
 
   return <PageLoader onSuccessComponent={SuccessComponent} />;
 };
 
-export default RememberPassword;
+export default Signup;
