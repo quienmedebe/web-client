@@ -23,7 +23,7 @@ const RememberPassword = () => {
       setSuccessMessage('Te hemos enviado un email para establecer una nueva contraseña');
     } catch (error) {
       setSuccessMessage('');
-      switch (error.data?.error) {
+      switch (error?.data?.error) {
         case ERRORS.BAD_REQUEST:
           setErrorMessage('Faltan campos por completar');
           break;

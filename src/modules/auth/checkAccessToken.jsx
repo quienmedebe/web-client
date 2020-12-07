@@ -1,13 +1,16 @@
+import axiosOriginal from 'axios';
 import axios from '../axios';
+const source = axiosOriginal.CancelToken.source();
 
-async function checkAccessToken() {
-  try {
-    const {data} = await axios.get(`/auth/check`);
+function checkAccessToken() {
+  const promise = axios.get(`/auth/check`, {
+    cancelToken: source.token,
+  });
 
-    return data;
-  } catch (error) {
-    return Promise.reject(error.response);
-  }
+  return {
+    promise,
+    cancel: source.cancel,
+  };
 }
 
 export default checkAccessToken;

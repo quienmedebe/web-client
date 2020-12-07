@@ -44,7 +44,7 @@ const Login = () => {
         }
       );
     } catch (error) {
-      switch (error.data?.error) {
+      switch (error?.data?.error) {
         case ERRORS.UNAUTHORIZED:
           setErrorMessage('Los datos introducidos no son correctos');
           break;

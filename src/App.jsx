@@ -7,7 +7,8 @@ import GlobalStyles from './GlobalStyles';
 import Navigation from './Navigation';
 import PageLoader from './components/UI/PageLoader/PageLoader';
 import AppLoading from './AppLoading';
-import {appHasLoaded} from './redux/app/app.actions';
+import {checkAccessToken} from './modules/auth';
+import {appHasLoaded, setLoggedUser} from './redux/app/app.actions';
 
 function App() {
   const appState = useSelector(state => state.app);
@@ -15,14 +16,22 @@ function App() {
 
   useEffect(() => {
     const splashScreenTime = resolveAfterTime(APP_SPLASH_SCREEN_TIME);
-    allSettled([splashScreenTime.promise]).then(([splashResult]) => {
+    const checkLoggedUserPromise = checkAccessToken();
+
+    allSettled([splashScreenTime.promise, checkLoggedUserPromise.promise]).then(([splashResult, loggedUser]) => {
+      if (loggedUser.status === 'fulfilled') {
+        dispatch(setLoggedUser(loggedUser.value.data.id));
+      } else {
+        dispatch(setLoggedUser(null));
+      }
       if (splashResult.status === 'fulfilled') {
         dispatch(appHasLoaded());
       }
     });
 
     return () => {
-      splashScreenTime.cancel();
+      splashScreenTime.cancel?.();
+      checkLoggedUserPromise.cancel?.();
     };
   }, [dispatch]);
 
