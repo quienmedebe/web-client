@@ -1,12 +1,14 @@
 import React, {useMemo} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import isEmail from 'isemail';
 import Styles from './RememberPasswordView.styles';
 import Logo from '../../components/UI/Logo/Logo';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
+import {REQUIRED, MAX_LENGTH, INVALID_EMAIL} from '../../modules/validation';
 
-const RememberPasswordView = ({rememberPasswordHandler, email, setEmail, errorMessage, successMessage}) => {
+const RememberPasswordView = ({rememberPasswordHandler, email, setEmail, errorMessage, successMessage, register, errors, handleSubmit}) => {
   const SuccessMessage = useMemo(() => {
     if (!successMessage) {
       return null;
@@ -29,7 +31,7 @@ const RememberPasswordView = ({rememberPasswordHandler, email, setEmail, errorMe
       <main className='Main'>
         <div className='Main__wrapper'>
           <h2 className='Main__title'>Recordar contraseña</h2>
-          <form className='Main__form' onSubmit={rememberPasswordHandler}>
+          <form className='Main__form' onSubmit={handleSubmit(rememberPasswordHandler)}>
             <Input
               value={email}
               onChange={e => setEmail(e.target.value)}
@@ -41,6 +43,15 @@ const RememberPasswordView = ({rememberPasswordHandler, email, setEmail, errorMe
               labelProps={{htmlFor: 'email'}}
               containerProps={{className: 'Main__form-group'}}
               autoComplete='email'
+              ref={register({
+                required: REQUIRED(),
+                maxLength: {
+                  value: 255,
+                  message: MAX_LENGTH(255),
+                },
+                validate: value => isEmail.validate(value.trim()) || INVALID_EMAIL(),
+              })}
+              error={errors.email?.message}
             />
             <div className='Main__form-send'>
               <Button type='submit'>Recuperar contraseña</Button>
@@ -65,6 +76,9 @@ RememberPasswordView.propTypes = {
   setEmail: PropTypes.func,
   errorMessage: PropTypes.string,
   successMessage: PropTypes.string,
+  register: PropTypes.func,
+  errors: PropTypes.object,
+  handleSubmit: PropTypes.func,
 };
 
 export default RememberPasswordView;
