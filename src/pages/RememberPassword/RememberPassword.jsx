@@ -14,8 +14,6 @@ const RememberPassword = () => {
   const [sendingEmail, setSendingEmail] = useState(false);
 
   const rememberPasswordHandler = useCallback(async () => {
-    const parsedEmail = email.trim();
-
     if (sendingEmail) {
       return;
     }
@@ -23,6 +21,8 @@ const RememberPassword = () => {
     try {
       setSendingEmail(true);
       setErrorMessage('');
+
+      const parsedEmail = email.trim();
       await rememberPassword({
         email: parsedEmail,
       });
