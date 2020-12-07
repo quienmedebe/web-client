@@ -9,8 +9,9 @@ import Image from '../../components/UI/Image/Image';
 import ButtonLight from '../../components/UI/Button/ButtonLight';
 import googleIcon from '../../assets/images/google.png';
 import appleIcon from '../../assets/images/apple-black.png';
+import {REQUIRED} from '../../modules/validation';
 
-const LoginView = ({loginHandler, email, setEmail, password, setPassword, errorMessage}) => {
+const LoginView = ({loginHandler, email, setEmail, password, setPassword, errorMessage, register, errors, handleSubmit}) => {
   const ErrorMessage = useMemo(() => {
     if (!errorMessage) {
       return null;
@@ -25,7 +26,7 @@ const LoginView = ({loginHandler, email, setEmail, password, setPassword, errorM
       <main className='Main'>
         <div className='Main__wrapper'>
           <h2 className='Main__title'>Inicia sesión</h2>
-          <form className='Main__form' onSubmit={loginHandler}>
+          <form className='Main__form' onSubmit={handleSubmit(loginHandler)}>
             <Input
               value={email}
               onChange={e => setEmail(e.target.value)}
@@ -37,6 +38,10 @@ const LoginView = ({loginHandler, email, setEmail, password, setPassword, errorM
               labelProps={{htmlFor: 'email'}}
               containerProps={{className: 'Main__form-group'}}
               autoComplete='email'
+              ref={register({
+                required: REQUIRED(),
+              })}
+              error={errors.email?.message}
             />
             <Input
               value={password}
@@ -49,6 +54,10 @@ const LoginView = ({loginHandler, email, setEmail, password, setPassword, errorM
               labelProps={{htmlFor: 'password'}}
               containerProps={{className: 'Main__form-group'}}
               autoComplete='password'
+              ref={register({
+                required: REQUIRED(),
+              })}
+              error={errors.password?.message}
             />
             <div className='Main__form-send'>
               <Button type='submit'>Iniciar sesión</Button>
@@ -95,6 +104,9 @@ LoginView.propTypes = {
   password: PropTypes.string.isRequired,
   setPassword: PropTypes.func,
   errorMessage: PropTypes.string,
+  register: PropTypes.func,
+  errors: PropTypes.object,
+  handleSubmit: PropTypes.func,
 };
 
 export default LoginView;

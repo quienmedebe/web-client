@@ -91,7 +91,7 @@ const SignupView = ({
               placeholder='Confirmar contraseña'
               labelProps={{htmlFor: 'confirmPassword'}}
               containerProps={{className: 'Main__form-group'}}
-              autoComplete='password'
+              autoComplete='off'
               ref={register({
                 required: REQUIRED(),
                 validate: value => value === password || EMAILS_DO_NOT_MATCH(),

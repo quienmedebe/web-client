@@ -4,13 +4,13 @@ import redirect from './redirect';
 import axios from '../axios';
 import STORAGE_KEY from './storageKeys';
 
-async function login({email, password} = {}, {dispatch, redirectTo = '/'} = {}) {
+async function signup({email, password} = {}, {dispatch, redirectTo = '/'} = {}) {
   try {
-    const loginData = {
+    const signupData = {
       email,
       password,
     };
-    const {data} = await axios.post(`/auth/login`, loginData);
+    const {data} = await axios.post(`/auth/signup`, signupData);
     const {access_token, refresh_token} = data;
 
     const decodedToken = JWTDecode(access_token);
@@ -26,4 +26,4 @@ async function login({email, password} = {}, {dispatch, redirectTo = '/'} = {}) 
   }
 }
 
-export default login;
+export default signup;
