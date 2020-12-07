@@ -4,6 +4,7 @@ import {useForm} from 'react-hook-form';
 import PageLoader from '../../components/UI/PageLoader/PageLoader';
 import GeneralLayout from '../../components/Layouts/GeneralLayout';
 import RememberPasswordView from './RememberPasswordView';
+import {rememberPassword, ERRORS} from '../../modules/auth';
 
 const RememberPassword = () => {
   const {register, errors, handleSubmit} = useForm();
@@ -13,14 +14,25 @@ const RememberPassword = () => {
 
   const rememberPasswordHandler = useCallback(async () => {
     const parsedEmail = email.trim();
-    console.log(parsedEmail);
 
     try {
       setErrorMessage('');
+      await rememberPassword({
+        email: parsedEmail,
+      });
       setSuccessMessage('Te hemos enviado un email para establecer una nueva contraseña');
     } catch (error) {
       setSuccessMessage('');
-      setErrorMessage('Ha ocurrido un error al recuperar la contraseña');
+      switch (error.data?.error) {
+        case ERRORS.BAD_REQUEST:
+          setErrorMessage('Faltan campos por completar');
+          break;
+        case ERRORS.EMAIL_NOT_FOUND:
+          setErrorMessage('Email no encontrado');
+          break;
+        default:
+          setErrorMessage('Ha ocurrido un error al recuperar la contraseña');
+      }
     }
   }, [email]);
 

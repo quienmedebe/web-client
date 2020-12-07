@@ -10,16 +10,16 @@ async function signup({email, password} = {}, {dispatch, redirectTo = '/'} = {})
       email,
       password,
     };
-    const {access_token, refresh_token} = await axios.post(`/auth/signup`, signupData);
+    const {data} = await axios.post(`/auth/signup`, signupData);
+    const {access_token, refresh_token} = data;
 
     const decodedToken = JWTDecode(access_token);
-    console.log(decodedToken);
 
     localStorage.setItem(STORAGE_KEY.ACCESS_TOKEN, access_token);
     localStorage.setItem(STORAGE_KEY.REFRESH_TOKEN, refresh_token);
-    localStorage.setItem(STORAGE_KEY.ACCOUNT_ID, '');
+    localStorage.setItem(STORAGE_KEY.ACCOUNT_ID, decodedToken.id);
 
-    await dispatch(setLoggedUser('1'));
+    await dispatch(setLoggedUser(decodedToken.id));
     return redirect(redirectTo);
   } catch (error) {
     return Promise.reject(error.response);

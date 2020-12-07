@@ -30,6 +30,8 @@ const Signup = () => {
         }
       );
     } catch (error) {
+      // eslint-disable-next-line
+      debugger;
       switch (error.data?.error) {
         case ERRORS.BAD_REQUEST:
           setErrorMessage('Hay datos inválidos');
