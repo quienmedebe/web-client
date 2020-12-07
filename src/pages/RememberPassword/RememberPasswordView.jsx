@@ -8,7 +8,7 @@ import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import {REQUIRED, MAX_LENGTH, INVALID_EMAIL} from '../../modules/validation';
 
-const RememberPasswordView = ({rememberPasswordHandler, email, setEmail, errorMessage, successMessage, register, errors, handleSubmit}) => {
+const RememberPasswordView = ({rememberPasswordHandler, email, setEmail, errorMessage, successMessage, register, errors, handleSubmit, sendingEmail}) => {
   const SuccessMessage = useMemo(() => {
     if (!successMessage) {
       return null;
@@ -54,7 +54,9 @@ const RememberPasswordView = ({rememberPasswordHandler, email, setEmail, errorMe
               error={errors.email?.message}
             />
             <div className='Main__form-send'>
-              <Button type='submit'>Recuperar contraseña</Button>
+              <Button isLoading={sendingEmail} type='submit'>
+                Recuperar contraseña
+              </Button>
               {ErrorMessage}
               {SuccessMessage}
             </div>
@@ -79,6 +81,7 @@ RememberPasswordView.propTypes = {
   register: PropTypes.func,
   errors: PropTypes.object,
   handleSubmit: PropTypes.func,
+  sendingEmail: PropTypes.bool,
 };
 
 export default RememberPasswordView;
