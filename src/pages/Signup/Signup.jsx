@@ -14,8 +14,15 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [sendingSignup, setSendingSignup] = useState(false);
 
   const signupHandler = useCallback(async () => {
+    if (sendingSignup) {
+      return;
+    }
+
+    setSendingSignup(true);
+
     const parsedEmail = email.trim();
     try {
       setErrorMessage('');
@@ -40,8 +47,9 @@ const Signup = () => {
         default:
           setErrorMessage('Ha ocurrido un error al crear la cuenta');
       }
+      setSendingSignup(false);
     }
-  }, [dispatch, email, password]);
+  }, [dispatch, email, password, sendingSignup]);
 
   const SuccessComponent = useMemo(() => {
     return (
@@ -61,10 +69,11 @@ const Signup = () => {
           register={register}
           errors={errors}
           handleSubmit={handleSubmit}
+          sendingSignup={sendingSignup}
         />
       </GeneralLayout>
     );
-  }, [signupHandler, email, password, confirmPassword, errorMessage, register, errors, handleSubmit]);
+  }, [signupHandler, email, password, confirmPassword, errorMessage, register, errors, handleSubmit, sendingSignup]);
 
   return <PageLoader onSuccessComponent={SuccessComponent} />;
 };
