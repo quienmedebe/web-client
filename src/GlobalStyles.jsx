@@ -7,6 +7,7 @@ import PoppinsLightItalic from './assets/fonts/Poppins-LightItalic.ttf';
 import PoppinsRegular from './assets/fonts/Poppins-Regular.ttf';
 import PoppinsSemiBold from './assets/fonts/Poppins-SemiBold.ttf';
 import PoppinsSemiBoldItalic from './assets/fonts/Poppins-SemiBoldItalic.ttf';
+import {main, textAlt} from './theme/colors';
 
 export default createGlobalStyle`
   @font-face {
@@ -73,17 +74,42 @@ export default createGlobalStyle`
 
   html{
     font-size: 62.5%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
   }
 
   body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     font-size: 1.6rem;
     margin: 0;
     font-family: Poppins, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    color: ${textAlt};
+  }
+
+  #root{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 
   code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  }
+
+  a {
+    color: ${main};
+    font-weight: 500;
+    text-decoration-color: transparent;
+    transition: text-decoration-color ease-in-out 300ms;
+    
+    &:hover{
+      text-decoration-color: ${main};
+    }
   }
 `;

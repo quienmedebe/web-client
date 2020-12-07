@@ -8,7 +8,7 @@ const PageLoad = ({id, isLoading, hasError, onErrorComponent, onSuccessComponent
 
   return loadingAnimation.map(({item, key, props}) => {
     return (
-      <animated.div id={id} key={key} style={props}>
+      <animated.div id={id} key={key} style={{...props, display: 'flex', flexDirection: 'column', flex: 1}}>
         {item ? onLoadComponent : loadedComponent}
       </animated.div>
     );
