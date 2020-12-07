@@ -20,6 +20,7 @@ const SignupView = ({
   register,
   errors,
   handleSubmit,
+  sendingSignup,
 }) => {
   const ErrorMessage = useMemo(() => {
     if (!errorMessage) {
@@ -99,7 +100,9 @@ const SignupView = ({
               error={errors.confirmPassword?.message}
             />
             <div className='Main__form-send'>
-              <Button type='submit'>Crear cuenta</Button>
+              <Button isLoading={sendingSignup} type='submit'>
+                Crear cuenta
+              </Button>
               {ErrorMessage}
             </div>
           </form>
@@ -126,6 +129,7 @@ SignupView.propTypes = {
   register: PropTypes.func,
   errors: PropTypes.object,
   handleSubmit: PropTypes.func,
+  sendingSignup: PropTypes.bool,
 };
 
 export default SignupView;

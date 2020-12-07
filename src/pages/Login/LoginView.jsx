@@ -11,7 +11,7 @@ import googleIcon from '../../assets/images/google.png';
 import appleIcon from '../../assets/images/apple-black.png';
 import {REQUIRED} from '../../modules/validation';
 
-const LoginView = ({loginHandler, email, setEmail, password, setPassword, errorMessage, register, errors, handleSubmit}) => {
+const LoginView = ({loginHandler, email, setEmail, password, setPassword, errorMessage, register, errors, handleSubmit, sendingLogin}) => {
   const ErrorMessage = useMemo(() => {
     if (!errorMessage) {
       return null;
@@ -60,7 +60,9 @@ const LoginView = ({loginHandler, email, setEmail, password, setPassword, errorM
               error={errors.password?.message}
             />
             <div className='Main__form-send'>
-              <Button type='submit'>Iniciar sesión</Button>
+              <Button isLoading={sendingLogin} type='submit'>
+                Iniciar sesión
+              </Button>
               {ErrorMessage}
             </div>
           </form>
@@ -107,6 +109,7 @@ LoginView.propTypes = {
   register: PropTypes.func,
   errors: PropTypes.object,
   handleSubmit: PropTypes.func,
+  sendingLogin: PropTypes.bool,
 };
 
 export default LoginView;

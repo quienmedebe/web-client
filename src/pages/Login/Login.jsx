@@ -15,6 +15,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [sendingLogin, setSendingLogin] = useState(false);
 
   const originalRequest = useMemo(() => {
     if (location.state?.originalRequestPath) {
@@ -25,6 +26,12 @@ const Login = () => {
   }, [location.state]);
 
   const loginHandler = useCallback(async () => {
+    if (sendingLogin) {
+      return;
+    }
+
+    setSendingLogin(true);
+
     const parsedEmail = email.trim();
     if (!parsedEmail.length) {
       setErrorMessage('El email es obligatorio');
@@ -51,8 +58,9 @@ const Login = () => {
         default:
           setErrorMessage('Ha ocurrido un error al iniciar sesión');
       }
+      setSendingLogin(false);
     }
-  }, [dispatch, originalRequest, email, password]);
+  }, [dispatch, originalRequest, email, password, sendingLogin]);
 
   const SuccessComponent = useMemo(() => {
     return (
@@ -70,10 +78,11 @@ const Login = () => {
           register={register}
           errors={errors}
           handleSubmit={handleSubmit}
+          sendingLogin={sendingLogin}
         />
       </GeneralLayout>
     );
-  }, [loginHandler, email, password, errorMessage, register, errors, handleSubmit]);
+  }, [loginHandler, email, password, errorMessage, register, errors, handleSubmit, sendingLogin]);
 
   return <PageLoader onSuccessComponent={SuccessComponent} />;
 };
