@@ -13,6 +13,10 @@ const RememberPassword = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [sendingEmail, setSendingEmail] = useState(false);
 
+  const resetFields = useCallback(() => {
+    setEmail('');
+  }, []);
+
   const rememberPasswordHandler = useCallback(async () => {
     if (sendingEmail) {
       return;
@@ -27,6 +31,7 @@ const RememberPassword = () => {
         email: parsedEmail,
       });
       setSuccessMessage('Te hemos enviado un email para establecer una nueva contraseña');
+      resetFields();
       setSendingEmail(false);
     } catch (error) {
       setSuccessMessage('');
@@ -42,7 +47,7 @@ const RememberPassword = () => {
       }
       setSendingEmail(false);
     }
-  }, [email, sendingEmail]);
+  }, [email, sendingEmail, resetFields]);
 
   const SuccessComponent = useMemo(() => {
     return (

@@ -7,6 +7,7 @@ import store from './redux/store';
 import {getCurrentAppState} from './redux/app/app.functions';
 import RememberPassword from './pages/RememberPassword/RememberPassword';
 import Signup from './pages/Signup/Signup';
+import NewPassword from './pages/NewPassword/NewPassword';
 
 const authGuard = (to, from, next) => {
   if (!to.meta?.auth) {
@@ -35,6 +36,7 @@ const Navigation = () => {
         <GuardedRoute exact path='/login' component={Login} />
         <GuardedRoute exact path='/signup' component={Signup} />
         <GuardedRoute exact path='/remember-password' component={RememberPassword} />
+        <GuardedRoute exact path='/new-password/:account_id/:token' component={NewPassword} />
         <GuardedRoute render={() => <Redirect to='/' />} />
       </Switch>
     </GuardProvider>
