@@ -1,8 +1,5 @@
-import JWTDecode from 'jwt-decode';
-import {setLoggedUser} from '../../redux/app/app.actions';
-import redirect from './redirect';
+import loginWithTokens from './loginWithTokens';
 import axios from '../axios';
-import STORAGE_KEY from './storageKeys';
 
 async function login({email, password} = {}, {dispatch, redirectTo = '/'} = {}) {
   try {
@@ -13,14 +10,7 @@ async function login({email, password} = {}, {dispatch, redirectTo = '/'} = {}) 
     const {data} = await axios.post(`/auth/login`, loginData);
     const {access_token, refresh_token} = data;
 
-    const decodedToken = JWTDecode(access_token);
-
-    localStorage.setItem(STORAGE_KEY.ACCESS_TOKEN, access_token);
-    localStorage.setItem(STORAGE_KEY.REFRESH_TOKEN, refresh_token);
-    localStorage.setItem(STORAGE_KEY.ACCOUNT_ID, decodedToken.id);
-
-    await dispatch(setLoggedUser(decodedToken.id));
-    return redirect(redirectTo);
+    await loginWithTokens({access_token, refresh_token}, {dispatch, redirectTo});
   } catch (error) {
     return Promise.reject(error.response);
   }

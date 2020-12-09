@@ -10,9 +10,21 @@ import ButtonLight from '../../components/UI/Button/ButtonLight';
 import googleIcon from '../../assets/images/google.png';
 import appleIcon from '../../assets/images/apple-black.png';
 import {REQUIRED} from '../../modules/validation';
-import {SERVER_BASE_URL} from '../../config/config';
 
-const LoginView = ({loginHandler, email, setEmail, password, setPassword, errorMessage, register, errors, handleSubmit, sendingLogin}) => {
+const LoginView = ({
+  loginHandler,
+  email,
+  setEmail,
+  password,
+  setPassword,
+  errorMessage,
+  register,
+  errors,
+  handleSubmit,
+  sendingLogin,
+  googleHandler,
+  appleHandler,
+}) => {
   const ErrorMessage = useMemo(() => {
     if (!errorMessage) {
       return null;
@@ -84,11 +96,11 @@ const LoginView = ({loginHandler, email, setEmail, password, setPassword, errorM
         <div className='Social__wrapper'>
           <h2 className='Social__title'>Vincula tu cuenta</h2>
           <div className='Social__providers'>
-            <ButtonLight className='Social__providers-button' forwardedAs='a' href={`${SERVER_BASE_URL}/auth/google`}>
+            <ButtonLight className='Social__providers-button' onClick={googleHandler}>
               <Image src={googleIcon} alt='Inicia sesión con Google' className='Social__providers-button-image' />
               Google
             </ButtonLight>
-            <ButtonLight className='Social__providers-button' forwardedAs='a' href={`${SERVER_BASE_URL}/auth/apple`}>
+            <ButtonLight className='Social__providers-button' onClick={appleHandler}>
               <Image src={appleIcon} alt='Inicia sesión con Apple' className='Social__providers-button-image' />
               Apple
             </ButtonLight>
@@ -111,6 +123,8 @@ LoginView.propTypes = {
   errors: PropTypes.object,
   handleSubmit: PropTypes.func,
   sendingLogin: PropTypes.bool,
+  googleHandler: PropTypes.func,
+  appleHandler: PropTypes.func,
 };
 
 export default LoginView;
