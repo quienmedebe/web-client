@@ -7,12 +7,14 @@ export default styled.button`
   color: ${textAlt};
   padding: 0.5rem 1rem;
   font-family: inherit;
+  font-weight: 400;
   font-size: 1.6rem;
   border: 0;
   border-radius: 0.5rem;
   cursor: pointer;
   transition: background-color ease-in-out 300ms, box-shadow ease-out 300ms, transform ease-out 300ms;
   box-shadow: 0 0.1rem 0.5rem ${shadow};
+  text-decoration: none;
 
   /***
   * Sticky hover state on mobile phones: https://stackoverflow.com/a/28058919
